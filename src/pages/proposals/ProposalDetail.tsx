@@ -4,13 +4,13 @@ import { Card } from "@/components/ui/card";
 import { useProposal } from "@/store/proposalStore";
 import { useParams } from "react-router-dom";
 
-interface ProposalDetailProps {
-  id: string;
-  title: string;
-  description: string;
-  date: Date;
-  status: string;
-}
+// interface ProposalDetailProps {
+//   id: string;
+//   title: string;
+//   description: string;
+//   date: Date;
+//   status: string;
+// }
 
 export default function ProposalDetail() {
   const { id } = useParams();
