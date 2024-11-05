@@ -12,6 +12,7 @@ export interface Proposal {
   votes: Array<{
     id: string;
     value: VoteValue;
+    address: string;
   }>;
 }
 

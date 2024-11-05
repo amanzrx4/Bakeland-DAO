@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import { useProposal, useProposalStore } from "@/store/proposalStore";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { useAccount } from "wagmi";
 
 const formSchema = z.object({
   vote: z.enum(["for", "against", "abstain"], {
@@ -33,12 +34,17 @@ export function VotingForm({ proposalId }: VotingFormProps) {
 
   const { updateProposal } = useProposalStore();
   const navigate = useNavigate();
-
+  const { address } = useAccount();
   const proposal = useProposal(proposalId)!;
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!address) {
+      toast.error("Please connect your wallet");
+      return;
+    }
+
     updateProposal(proposalId, {
-      votes: [...proposal.votes, { id: uuidv4(), value: values.vote }],
+      votes: [...proposal.votes, { id: uuidv4(), value: values.vote, address }],
     });
 
     toast.success("Vote submitted");
